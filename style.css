@@ -49,11 +49,24 @@ a:hover { color: var(--highlight); }
 
 /* Header: a typed double rule underneath */
 header.site { border-bottom: 3px double var(--ink); background: var(--bg); }
-header.site .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-top: 12px; padding-bottom: 12px; }
-.brand { font-weight: 700; font-size: 1.15rem; color: var(--ink); text-decoration: none; margin-right: auto; }
+/* The name and the text size buttons share one line, centred on each other. The tabs' bars sit
+   on the header's rule, so the header has no padding underneath. */
+header.site .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-top: 10px; padding-bottom: 0; }
+.brand { font-weight: 700; font-size: 1.15rem; line-height: 1.2; color: var(--ink); text-decoration: none; margin-right: auto; }
+/* Links in the other menus: contents lists and breadcrumbs */
 nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 0; padding: 0; }
 nav a { text-decoration: none; color: var(--ink); font-size: 1rem; padding: 8px 0; border-bottom: 2px solid transparent; display: inline-block; }
-nav a:hover, nav a[aria-current="page"] { border-bottom-color: var(--highlight); color: var(--ink); }
+nav a:hover { border-bottom-color: var(--highlight); color: var(--ink); }
+/* The main menu: tabs in the page's own font. On a phone they share one full row under the
+   site name; on wider screens they sit to the right of it. The site name is the way home. */
+header.site nav ul { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; }
+header.site nav a {
+  display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 10px;
+  font-size: 1rem; text-align: center; line-height: 1.2;
+  color: var(--ink); text-decoration: none; border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+}
+header.site nav a:hover { color: var(--highlight); border-bottom-color: var(--line); }
+header.site nav a[aria-current="page"] { color: var(--highlight); border-bottom-color: var(--highlight); }
 
 .tools { display: flex; align-items: center; gap: 6px; }
 .tools button, button.btn {
@@ -65,7 +78,18 @@ nav a:hover, nav a[aria-current="page"] { border-bottom-color: var(--highlight);
 }
 .tools button:hover { border-color: var(--highlight); }
 .tools { order: 2; }
-nav { order: 3; flex: 1 0 100%; }
+header.site nav { order: 3; flex: 1 0 100%; }
+/* Wide screens: the name, the menu and the text size buttons in one row. It never wraps: when
+   space runs short (or the text is made larger), long labels break onto two lines in their tab. */
+@media (min-width: 960px) {
+  /* One row: tabs as tall as the header, the name and the buttons centred in it */
+  header.site .wrap { flex-wrap: nowrap; padding-top: 0; }
+  .brand, .tools { flex-shrink: 0; }
+  header.site nav { order: 1; flex: 0 1 auto; min-width: 0; }
+  /* Tabs as wide as their labels, so the space between labels is the same everywhere */
+  header.site nav ul { display: flex; gap: 6px; }
+  header.site nav a { min-height: 60px; padding: 8px 12px; }
+}
 
 /* Type */
 h1 { font-size: clamp(1.7rem, 1.2rem + 2vw, 2.5rem); line-height: 1.2; margin: 0 0 0.6rem; text-wrap: balance; }
@@ -94,9 +118,8 @@ h3 { font-size: 1.1rem; margin: 1.4rem 0 0.4rem; }
 .release .card p { font-size: clamp(0.8rem, 2.4vw, 0.95rem); }
 .release .thumb { aspect-ratio: 1 / 1; margin-bottom: 6px; }
 
-/* Typewriter-style labels and ink stamps */
-.tag, .stamp { display: inline-block; font-family: var(--type); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; color: var(--highlight); border: 2px solid var(--highlight); border-radius: 3px; padding: 0 8px; margin-bottom: 6px; transform: rotate(-2deg); }
-.stamp { font-size: 0.95rem; padding: 2px 12px; margin: 0 0 1rem; }
+/* Typewriter-style labels, such as the Draft tag on planned guides */
+.tag { display: inline-block; font-family: var(--type); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; color: var(--highlight); border: 2px solid var(--highlight); border-radius: 3px; padding: 0 8px; margin-bottom: 6px; transform: rotate(-2deg); }
 
 .thumb { aspect-ratio: 4 / 3; background: var(--bg); border: 1px dashed var(--rule); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 8px; border-radius: 2px; }
 .cover { aspect-ratio: 2 / 3; width: 160px; max-width: 100%; background: var(--bg); border: 1px dashed var(--rule); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--muted); font-size: 0.85rem; border-radius: 2px; }

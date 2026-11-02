@@ -110,6 +110,7 @@ h3 { font-size: 1.1rem; margin: 1.4rem 0 0.4rem; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; margin: 1rem 0; }
 .card { border: 1px solid var(--line); border-bottom: 4px solid var(--line); border-radius: 2px; padding: 16px 18px; background: var(--card); }
 .card h3 { margin-top: 0; }
+.card h2 { font-size: 1.1rem; line-height: inherit; margin: 0 0 0.4rem; }
 .card p { margin: 6px 0 0; font-size: 0.95rem; color: var(--muted); }
 /* A release of free puzzles: always one row of three, even on a phone */
 .release { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 2vw, 16px); margin: 0.4rem 0 1.6rem; }

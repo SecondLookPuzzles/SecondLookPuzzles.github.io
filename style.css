@@ -126,16 +126,29 @@ h3 { font-size: 1.1rem; margin: 1.4rem 0 0.4rem; }
 .cover { aspect-ratio: 2 / 3; width: 160px; max-width: 100%; background: var(--bg); border: 1px dashed var(--rule); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--muted); font-size: 0.85rem; border-radius: 2px; }
 img.thumb, img.cover { display: block; width: 100%; height: auto; object-fit: contain; border-style: solid; }
 
-/* Book cards: a large cover beside compact text of about the same height */
-.book { display: grid; grid-template-columns: 215px 1fr; gap: 24px; align-items: center; margin: 0 0 16px; }
+/* Book cards: a small cover beside compact text, one card to a row */
+.book-grid { display: grid; gap: 12px; }
+.book { display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: start; margin: 0; }
+.rules { margin: -0.4rem 0 1rem; font-size: 0.9rem; }
+/* The game list: one row of small links that stays at the top of the screen while the reader scrolls,
+   so no section needs a link back to it. On a narrow screen the row scrolls sideways. */
+.game-filter { padding: 8px 0; }
+@media (min-width: 561px) { .game-filter { position: sticky; top: 0; z-index: 1; background: var(--bg) var(--grain); } }
+.game-filter ul { gap: 6px 8px; margin: 0; justify-content: center; }
+.game-filter li { flex: none; }
+section h2[id] { scroll-margin-top: 112px; }
+.game-filter a { padding: 4px 14px; font-size: 0.9rem; border: 1px solid var(--rule); border-radius: 999px; background: var(--card); }
+.game-filter a:hover { border-color: var(--highlight); color: var(--highlight); }
 .book .cover { width: 100%; }
 .book-body > :first-child { margin-top: 0; }
-.book-title { font-size: 1.2rem; margin: 0 0 4px; }
-.book-meta { font-size: 0.85rem; color: var(--muted); margin: 0 0 8px; }
+.book-title { font-size: 1.2rem; line-height: 1.25; margin: 0; }
+.book .book-meta { font-size: 0.85rem; color: var(--muted); margin: 2px 0 24px; }
+.nowrap { white-space: nowrap; }
 .book-blurb { font-size: 0.95rem; line-height: 1.5; margin: 0 0 10px; }
 .book-label { font-family: var(--type); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 2px; }
 .book-body ul { font-size: 0.92rem; line-height: 1.45; margin: 0 0 12px; padding-left: 1.2em; }
 .book-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.book-buy .btn { min-height: 36px; padding: 6px 14px; font-size: 0.85rem; }
 .book-stores { font-size: 0.8rem; color: var(--muted); }
 /* This week's puzzle: picture beside the download button, hints and solution */
 .weekly { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 24px; align-items: start; }
@@ -144,8 +157,13 @@ img.thumb, img.cover { display: block; width: 100%; height: auto; object-fit: co
 
 @media (max-width: 560px) {
   .weekly { grid-template-columns: 1fr; }
-  .book { grid-template-columns: 1fr; gap: 14px; }
-  .book .cover { width: 170px; justify-self: center; }
+  /* Phone: cover beside the title, the buttons on a full-width row under both */
+  .book { grid-template-columns: 80px 1fr; gap: 6px 14px; }
+  .book-body { display: contents; }
+  .book .cover { grid-row: span 4; }
+  .book-buy { grid-column: 1 / -1; }
+  .book-buy .btn { flex: 1 1 0; text-align: center; padding: 6px 4px; font-size: 0.8rem; white-space: nowrap; }
+  .book-stores { flex-basis: 100%; }
 }
 
 .note { background: var(--card); border-left: 4px solid var(--highlight); padding: 12px 16px; margin: 1.5rem 0; }
@@ -222,7 +240,7 @@ html { scroll-behavior: smooth; }
 .pair .arrow { font-size: 1.4rem; color: var(--muted); }
 
 @media print {
-  header.site, footer.site, .btn-row, .tools, .js-print, .toc, .breadcrumb { display: none; }
+  header.site, footer.site, .btn-row, .tools, .js-print, .toc, .game-filter, .breadcrumb { display: none; }
   :root { color-scheme: light; --bg: #fff; --card: #fff; --soft: #fff; --ink: #000; --line: #999; --mark: #ddd; --grain: none; }
   body { background-image: none; }
 }

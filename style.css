@@ -66,7 +66,7 @@ header.site nav a {
   color: var(--ink); text-decoration: none; border-top: 4px solid transparent; border-bottom: 4px solid transparent;
 }
 header.site nav a:hover { color: var(--highlight); border-bottom-color: var(--line); }
-header.site nav a[aria-current="page"] { color: var(--highlight); border-bottom-color: var(--highlight); }
+header.site nav a[aria-current="page"] { color: var(--highlight); font-weight: bold; border-bottom-color: var(--highlight); }
 
 .tools { display: flex; align-items: center; gap: 6px; }
 .tools button, button.btn {
@@ -130,26 +130,34 @@ img.thumb, img.cover { display: block; width: 100%; height: auto; object-fit: co
 .book-grid { display: grid; gap: 12px; }
 .book { display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: start; margin: 0; }
 .rules { margin: -0.4rem 0 1rem; font-size: 0.9rem; }
-/* The game list: one row of small links that stays at the top of the screen while the reader scrolls,
-   so no section needs a link back to it. On a narrow screen the row scrolls sideways. */
-.game-filter { padding: 8px 0; }
-@media (min-width: 561px) { .game-filter { position: sticky; top: 0; z-index: 1; background: var(--bg) var(--grain); } }
-.game-filter ul { gap: 6px 8px; margin: 0; justify-content: center; }
-.game-filter li { flex: none; }
-section h2[id] { scroll-margin-top: 112px; }
-.game-filter a { padding: 4px 14px; font-size: 0.9rem; border: 1px solid var(--rule); border-radius: 999px; background: var(--card); }
-.game-filter a:hover { border-color: var(--highlight); color: var(--highlight); }
+/* The game tabs: choosing one shows only that game's books. On a narrow screen the row scrolls sideways,
+   and its right edge fades while more tabs are hidden there. */
+.game-filter { margin: 0 0 1.5rem; border-bottom: 2px solid var(--line); }
+.game-tabs { position: relative; display: flex; justify-content: safe center; overflow-x: auto; scrollbar-width: none; }
+.game-tabs::-webkit-scrollbar { display: none; }
+.game-tabs.more { mask-image: linear-gradient(to right, #000 85%, transparent); }
+.game-tabs a { flex: none; padding: 10px 8px; margin-bottom: -2px; border-bottom: 4px solid transparent; font-size: 0.88rem; color: var(--muted); text-decoration: none; }
+.game-tabs a:hover { color: var(--highlight); border-bottom-color: var(--line); }
+.game-tabs a[aria-current="true"] { color: var(--highlight); font-weight: bold; border-bottom-color: var(--highlight); }
 .book .cover { width: 100%; }
 .book-body > :first-child { margin-top: 0; }
-.book-title { font-size: 1.2rem; line-height: 1.25; margin: 0; }
+.book .book-title { font-size: 1.2rem; line-height: 1.25; margin: -0.25em 0 0; }
 .book .book-meta { font-size: 0.85rem; color: var(--muted); margin: 2px 0 24px; }
 .nowrap { white-space: nowrap; }
-.book-blurb { font-size: 0.95rem; line-height: 1.5; margin: 0 0 10px; }
-.book-label { font-family: var(--type); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 2px; }
-.book-body ul { font-size: 0.92rem; line-height: 1.45; margin: 0 0 12px; padding-left: 1.2em; }
 .book-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
 .book-buy .btn { min-height: 36px; padding: 6px 14px; font-size: 0.85rem; }
-.book-stores { font-size: 0.8rem; color: var(--muted); }
+.book-stores { flex-basis: 100%; margin-bottom: -0.3em; font-size: 0.8rem; color: var(--muted); }
+/* A dot between the links that are shown; amazon.js chooses which. */
+.book-stores a { white-space: nowrap; }
+.book-stores a:not([hidden]) ~ a:not([hidden])::before { content: "\00b7  "; display: inline-block; white-space: pre; color: var(--muted); }
+/* Desktop: the spare height beside the cover splits 1 : 2 : 1, above the title, between the
+   details and the buttons, and below the store links. The negative margins remove the space
+   above the capitals and below the underlines, so the parts are measured from the ink. */
+@media (min-width: 561px) {
+  .book-body { align-self: stretch; display: flex; flex-direction: column; }
+  .book-body::before, .book-body::after { content: ""; flex-grow: 1; }
+  .book .book-meta { flex-grow: 2; margin-bottom: -0.3em; }
+}
 /* This week's puzzle: picture beside the download button, hints and solution */
 .weekly { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 24px; align-items: start; }
 .weekly .thumb { aspect-ratio: 1 / 1; margin: 0; }
@@ -163,7 +171,6 @@ section h2[id] { scroll-margin-top: 112px; }
   .book .cover { grid-row: span 4; }
   .book-buy { grid-column: 1 / -1; }
   .book-buy .btn { flex: 1 1 0; text-align: center; padding: 6px 4px; font-size: 0.8rem; white-space: nowrap; }
-  .book-stores { flex-basis: 100%; }
 }
 
 .note { background: var(--card); border-left: 4px solid var(--highlight); padding: 12px 16px; margin: 1.5rem 0; }

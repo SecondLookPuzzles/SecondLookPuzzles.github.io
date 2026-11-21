@@ -24,6 +24,19 @@
 <link rel="stylesheet" href="/style.css">
 <script src="/theme.js"></script>
 <script src="/amazon.js" defer></script>
+<script data-goatcounter="https://second-look.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
+<script>
+  function countClick(e) {
+    if (e.type === "auxclick" && e.button !== 1) return;  // middle click only, not right click
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || !window.goatcounter || !goatcounter.count) return;
+    var to = a.host === location.host ? a.pathname + a.hash : a.host + a.pathname;
+    var box = a.closest(".card[id]");
+    goatcounter.count({ event: true, path: to + (box ? " (" + box.id + ")" : ""), title: location.pathname });
+  }
+  document.addEventListener("click", countClick);
+  document.addEventListener("auxclick", countClick);
+</script>
 </head>
 <body>
 <header class="site"><div class="wrap">

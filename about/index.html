@@ -23,6 +23,19 @@
 <link rel="stylesheet" href="/style.css">
 <script src="/theme.js"></script>
 <script src="/amazon.js" defer></script>
+<script data-goatcounter="https://second-look.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
+<script>
+  function countClick(e) {
+    if (e.type === "auxclick" && e.button !== 1) return;  // middle click only, not right click
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || !window.goatcounter || !goatcounter.count) return;
+    var to = a.host === location.host ? a.pathname + a.hash : a.host + a.pathname;
+    var box = a.closest(".card[id]");
+    goatcounter.count({ event: true, path: to + (box ? " (" + box.id + ")" : ""), title: location.pathname });
+  }
+  document.addEventListener("click", countClick);
+  document.addEventListener("auxclick", countClick);
+</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
@@ -56,12 +69,15 @@
   <h2>How the puzzles are made</h2>
   <p>Every puzzle is checked by computer to confirm it has exactly one solution, so you never need to guess. Each collection runs from easy to hard, so you can start comfortably and build up from there.</p>
 
+  <h2>Privacy</h2>
+  <p>This site counts which links get clicked, with <a href="https://www.goatcounter.com/">GoatCounter</a>. That's all it counts. It sets no cookies and keeps nothing that could tell who you are.</p>
+
   <p>Grab a pencil and enjoy. Happy solving!</p>
 </div></main>
 
 
 <footer class="site"><div class="wrap">
-  <a href="/about/">About</a> &middot; Updated November 1, 2026
+  <a href="/about/">About</a> &middot; Updated November 21, 2026
 </div></footer>
 </body>
 </html>
